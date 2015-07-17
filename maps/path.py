@@ -1,7 +1,10 @@
+import point
+from point import distance
+import math
 class Path:
     pointList = []
     def __init__(self):
-        pointList = []
+        self.pointList = []
     
     def __repr__(self):
 
@@ -12,6 +15,7 @@ class Path:
         s = "Path : "
         for x in self.pointList:
             s + str(x)
+            print(x)
         return s
     
     def addPoint(self,point):
@@ -20,4 +24,49 @@ class Path:
     def removePoint(self,point):
         self.pointList.remove(point)
         
+
+    def maxDistance(self):
+        """
+        might be useful someday
+        """
+        max = 0
+        for i in range(0,len(self.pointList)-2):
+            for j in range(i,len(self.pointList)-1):
+                dist =distance(self.getAt(i),self.getAt(j)) 
+                if(dist > max):
+                    max = dist
+        return max
+                
+    def getAt(self,i):
+        if(i<len(self.pointList)):
+            return self.pointList[i]
+        else:
+            return 0
     
+    def pointDistance(self,point):
+        
+        """
+        |y2-y1           x2y1 - x1y2|
+        |x2-x1 * x - y +   x2-x1    |
+        -----------------------------
+           /      2
+          /y2 - y1 
+        \/ x2 - x1    + 1
+        distance between point and path section
+        """
+        
+        min = 10000
+        x = 0.0
+        y = 0.0
+        for p in self.pointList:
+#             p1 = self.getAt(i)
+#             p2 = self.getAt(i+1)
+#             deltaLat=   p2.latitude - p1.latitude
+#             deltaLong = p2.longitude - p1.longitude
+#             dist = math.fabs(point.longitude * (deltaLat/deltaLong) - point.latitude + ( (p2.longitude * p1.latitude) - (p1.longitude*p2.latitude))/deltaLong)/math.sqrt(math.pow(deltaLat/deltaLong,2) + 1)
+            dist = math.fabs(p.latitude - point.latitude) + math.fabs(p.longitude- point.longitude)
+            if (dist < min):
+                min = dist
+                x = p.longitude
+                y = p.latitude
+        return x,y,dist
