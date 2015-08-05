@@ -1,7 +1,7 @@
 import point
 from point import distance
 import math
-class Path:
+class Path(object):
     pointList = []
     def __init__(self):
         self.pointList = []
@@ -17,6 +17,12 @@ class Path:
             s + str(x)
             print(x)
         return s
+    
+    def getPointsFromFile(self,filename):
+        with open(filename,'r') as f:
+            for line in f.readlines():
+                l = line.split(',')
+                self.addPoint(point.Point(float(l[1]),float(l[0])))
     
     def addPoint(self,point):
         self.pointList.append(point)
@@ -64,9 +70,41 @@ class Path:
 #             deltaLat=   p2.latitude - p1.latitude
 #             deltaLong = p2.longitude - p1.longitude
 #             dist = math.fabs(point.longitude * (deltaLat/deltaLong) - point.latitude + ( (p2.longitude * p1.latitude) - (p1.longitude*p2.latitude))/deltaLong)/math.sqrt(math.pow(deltaLat/deltaLong,2) + 1)
+#             print(p.latitude)
+#             print(point.latitude)
+#             print(p.longitude)
+#             print(point.longitude)
+#             print("----------------")
             dist = math.fabs(p.latitude - point.latitude) + math.fabs(p.longitude- point.longitude)
+#             print(dist,p.latitude,p.longitude,point.latitude,point.longitude)
             if (dist < min):
                 min = dist
                 x = p.longitude
                 y = p.latitude
         return x,y,dist
+    def getMaxLat(self):
+        lat = -90
+        for p in self.pointList:
+            if p.latitude > lat:
+                lat = p.latitude
+        return lat
+    def getMaxLng(self):
+        lng = -180
+        for p in self.pointList:
+            if p.longitude > lng:
+                lng = p.longitude
+        return lng
+    def getMinLat(self):
+        lat = 90
+        for p in self.pointList:
+            if p.latitude < lat:
+                lat = p.latitude
+        return lat
+    def getMinLng(self):
+        lng = 180
+        for p in self.pointList:
+            if p.longitude < lng:
+                lng = p.longitude
+        return lng
+    
+        

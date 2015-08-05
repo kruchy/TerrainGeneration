@@ -1,6 +1,6 @@
 import math
 from utils import float_equal
-class Point:
+class Point(object):
     EARTH_RADIUS= 6371
     longitude = 0.0
     latitude = 0.0
@@ -8,11 +8,12 @@ class Point:
     timestamp = 0
     def __init__(self,latitude,longitude,elevation=0.0,timestamp='nan'):
         self.latitude = latitude
+        
         self.longitude = longitude
         self.timestamp = timestamp
         self.elevation = 0.0
     def __str__(self):
-        return "Point(%g,%g,%g,%s)"%(self.latitude,self.longitude,self.elevation,self.timestamp)
+        return "Point(%f,%f,%f,%s)"%(self.latitude,self.longitude,self.elevation,self.timestamp)
     __repr__ = __str__
     
     def __eq__(self,other):
